@@ -1,6 +1,6 @@
 {
   "name": "react-joyride",
-  "version": "1.11.4",
+  "version": "1.12.5",
   "description": "Create walkthroughs and guided tours for your apps",
   "author": "Gil Barbara <gilbarbara@gmail.com>",
   "repository": {
@@ -117,6 +117,7 @@
     "test:watch": "jest --config config/jest.config.js --watch",
     "test:ui": "npm start -- test:ui",
     "postmerge": "node config/tools update && npm update",
-    "postinstall": "npm run build"
+    "postinstall": "npm run build",
+    "prepublishOnly": "npm run build"
   }
 }
