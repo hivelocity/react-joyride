@@ -173,7 +173,7 @@ class Joyride extends React.Component {
     const { isRunning, shouldRun, standaloneData } = this.state;
     const { keyboardNavigation, run, steps, stepIndex } = this.props;
     const stepsChanged = (nextProps.steps !== steps);
-    const stepIndexChanged = (nextProps.stepIndex !== stepIndex && nextProps.stepIndex !== this.state.index);
+    const stepIndexChanged = (nextProps.stepIndex !== stepIndex || nextProps.stepIndex !== this.state.index);
     const runChanged = (nextProps.run !== run);
     let shouldStart = false;
     let didStop = false;
