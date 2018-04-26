@@ -116,7 +116,6 @@
     "test:watch": "jest --config config/jest.config.js --watch",
     "test:ui": "npm start -- test:ui",
     "postmerge": "node config/tools update && npm update",
-    "postinstall": "npm run build",
     "prepublishOnly": "npm run build"
   }
 }
