@@ -64,6 +64,7 @@ class Joyride extends React.Component {
     offsetParentSelector: PropTypes.string,
     resizeDebounce: PropTypes.bool,
     resizeDebounceDelay: PropTypes.number,
+    disableWarnings: PropTypes.bool,
     run: PropTypes.bool,
     scrollOffset: PropTypes.number,
     scrollToFirstStep: PropTypes.bool,
@@ -85,6 +86,7 @@ class Joyride extends React.Component {
     disableOverlay: false,
     holePadding: 5,
     keyboardNavigation: true,
+    disableWarnings: false,
     locale: {
       back: 'Back',
       close: 'Close',
@@ -248,7 +250,7 @@ class Joyride extends React.Component {
 
   componentWillUpdate(nextProps, nextState) {
     const { index, isRunning, shouldRenderTooltip, standaloneData } = this.state;
-    const { steps } = this.props;
+    const { steps, debug } = this.props;
     const { steps: nextSteps } = nextProps;
     const step = steps[index];
     const nextStep = nextSteps[nextState.index];
@@ -273,7 +275,11 @@ class Joyride extends React.Component {
     if (nextState.action === 'start' && !nextState.isRunning) {
       // There's a step to use, but there's no target in the DOM
       if (nextStep && !hasRenderedTarget) {
-        console.warn('Target not mounted', nextStep, nextState.action); //eslint-disable-line no-console
+        logger({
+          msg: ['Target not mounted', nextSteps],
+          debug
+        });
+
         this.triggerCallback({
           action: 'start',
           index: nextState.index,
@@ -316,7 +322,11 @@ class Joyride extends React.Component {
       // Attempted to advance to a step with a target that cannot be found
       /* istanbul ignore else */
       if (nextStep && !hasRenderedTarget) {
-        console.warn('Target not mounted', nextStep, nextState.action); //eslint-disable-line no-console
+        logger({
+          msg: 'Target not mounted',
+          debug
+        });
+
         this.triggerCallback({
           action: nextState.action,
           index: nextState.index,

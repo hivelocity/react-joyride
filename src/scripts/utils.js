@@ -82,9 +82,13 @@ export function getRootEl() {
  * @param {boolean}      [arg.debug] - Nothing will be logged unless debug is true
  */
 export function logger({ type = 'joyride', msg, warn = false, debug = false }) {
-  const loggingFunction = warn ? console.warn || console.error : console.log; //eslint-disable-line no-console
+  let loggingFunction = () => {};
+
   if (debug) {
     console.log(`%c${type}`, 'color: #760bc5; font-weight: bold; font-size: 12px;'); //eslint-disable-line no-console
+
+    loggingFunction = warn ? console.warn || console.error : console.log; //eslint-disable-line no-console
+
     /* istanbul ignore else */
     if (msg) {
       if (Array.isArray(msg)) {
